@@ -1,4 +1,5 @@
 import numpy as np
+from A2Part3 import DFT
 
 """
 A2-Part-5: Compute the magnitude spectrum (Optional)
@@ -21,5 +22,6 @@ def genMagSpec(x):
         magX (numpy array) = The magnitude spectrum of the input sequence x
                              (length N)
     """
-    ## Your code here
+    X = DFT(x)
+    return np.abs(X)
     
