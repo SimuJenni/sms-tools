@@ -24,7 +24,7 @@ integer but the data type is float, for example 1.0, 2.0, 55.0 etc. This is to a
 related with division by a integer.
 
 Due to the precision of the FFT computation, the zero values of the DFT are not zero but very small
-values < 1e-12 (or -240 dB) in magnitude. For practical purposes, all values with absolute value less 
+values < 1e-12 (or -240 dB) in magnitude. For practical purposes, all values with absolute value less
 than 1e-6 (or -120 dB) can be considered to be zero. 
 
 EXAMPLE: For a sinusoid x with f = 100 Hz, W = 15 samples and fs = 1000 Hz, you will need to zero-pad by 
@@ -44,3 +44,11 @@ def optimalZeropad(x, fs, f):
                         x appropriately (zero-padding length to be computed). mX is (M/2)+1 samples long
     """
     ## Your code here
+    minM = fs/f;
+    padAmount = x.size%minM
+    fftBuf = np.zeros(x.size+padAmount)
+    fftBuf[:x.size] = x
+    X = fft(fftBuf)
+    mx = 20.*np.log10(abs(X[:X.size/2+1]))
+
+    return mx
