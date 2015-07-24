@@ -52,3 +52,22 @@ def computeSNR(inputFile, window, M, N, H):
             SNR1 and SNR2 are floats.
     """
     ## your code here
+
+    def energy(X, k1, k2):
+        X2 = np.power(X, 2)
+        return np.sum(X2[k1:k2])
+
+    fs, x = UF.wavread(inputFile)
+    w = get_window(window, M)
+    xsyn = stft.stft(x, fs, w, N, H) #already in dB
+    noise = np.subtract(xsyn, x)
+    
+    Esignal1 = energy(x, 0, len(x))
+    Enoise1 = energy(noise, 0, len(noise))
+    SNR1 = 10*np.log10(Esignal1/Enoise1)
+    
+    Esignal2 = energy(x, M, len(x)-M)
+    Enoise2 = energy(noise, M, len(noise)-M)
+    SNR2 = 10*np.log10(Esignal2/Enoise2)
+
+    return SNR1, SNR2
