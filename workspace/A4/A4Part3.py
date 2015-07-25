@@ -78,7 +78,10 @@ def computeEngEnv(inputFile, window, M, N, H):
     nrgEnv2 = 10*np.log10(energy(undoDB(mX), bin1, bin2))
     
     result = np.transpose(np.array([nrgEnv1, nrgEnv2]))
-    
+    return result
+
+
+    """
     plt.subplot(211)
     numFrames = int(mX[:,0].size)
     frmTime = H*np.arange(numFrames)/float(fs)                             
@@ -95,6 +98,4 @@ def computeEngEnv(inputFile, window, M, N, H):
     
     plt.tight_layout()
     plt.show()
-
-    return result
-    
+    """    
