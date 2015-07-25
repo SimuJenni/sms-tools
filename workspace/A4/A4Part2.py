@@ -59,7 +59,7 @@ def computeSNR(inputFile, window, M, N, H):
 
     fs, x = UF.wavread(inputFile)
     w = get_window(window, M)
-    xsyn = stft.stft(x, fs, w, N, H) #already in dB
+    xsyn = stft.stft(x, fs, w, N, H)
     noise = np.subtract(xsyn, x)
     
     Esignal1 = energy(x, 0, len(x))
