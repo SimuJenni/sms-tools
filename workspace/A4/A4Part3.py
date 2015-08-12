@@ -62,3 +62,40 @@ def computeEngEnv(inputFile, window, M, N, H):
     """
     
     ### your code here
+    def undoDB(x):
+        return np.power(10, np.divide(x,20))
+    
+    def energy(x, k1, k2):
+        x2 = np.power(x[:,k1:k2], 2)
+        return np.sum(x2, axis=1)
+    
+    fs, x = UF.wavread(inputFile)
+    w = get_window(window, M)
+    bin1 = int(np.ceil(3000*N/fs))
+    bin2 = int(np.ceil(10000*N/fs))
+    mX, pX = stft.stftAnal(x, fs, w, N, H)
+    nrgEnv1 = 10*np.log10( energy(undoDB(mX), 0, bin1))
+    nrgEnv2 = 10*np.log10(energy(undoDB(mX), bin1, bin2))
+    
+    result = np.transpose(np.array([nrgEnv1, nrgEnv2]))
+    return result
+
+
+    """
+    plt.subplot(211)
+    numFrames = int(mX[:,0].size)
+    frmTime = H*np.arange(numFrames)/float(fs)                             
+    binFreq = np.arange(N/2+1)*float(fs)/N                         
+    plt.pcolormesh(frmTime, binFreq, np.transpose(mX))
+    plt.title('mX (piano.wav), M=1001, N=1024, H=256')
+    plt.autoscale(tight=True)
+
+    plt.subplot(212)
+    plt.plot(frmTime, nrgEnv1, label='low')
+    plt.plot(frmTime, nrgEnv2, label='height')
+    plt.title('Energy envelopes')
+    plt.autoscale(tight=True)
+    
+    plt.tight_layout()
+    plt.show()
+    """    
