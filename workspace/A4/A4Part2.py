@@ -66,8 +66,8 @@ def computeSNR(inputFile, window, M, N, H):
     Enoise1 = energy(noise, 0, len(noise))
     SNR1 = 10*np.log10(Esignal1/Enoise1)
     
-    Esignal2 = energy(x, M, len(x)-M)
-    Enoise2 = energy(noise, M, len(noise)-M)
+    Esignal2 = energy(x, M+1, len(x)-M-1)
+    Enoise2 = energy(noise, M+1, len(noise)-M-1)
     SNR2 = 10*np.log10(Esignal2/Enoise2)
 
     return SNR1, SNR2
